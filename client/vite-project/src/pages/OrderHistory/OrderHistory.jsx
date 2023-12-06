@@ -1,9 +1,25 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Table from 'react-bootstrap/Table';
-import { orderData } from '../../data/dummyData';
+import axios from 'axios';
 
-function OrderHistory({ orderList }) {
-     const [orders, setOrders] = useState([...orderData]);
+function OrderHistory() {
+     const [orders, setOrders] = useState([]);
+
+     useEffect(() => {
+          getOrders();
+     }, []);
+
+     function getOrders() {
+          axios.get('http://localhost:3000/api/orders')
+               .then(function (response) {
+                    console.log(response.data);
+                    setOrders(response.data);
+               })
+               .catch(function (error) {
+                    console.log(error);
+               });
+     }
+
      return (
           <div style={{ margin: '5rem', textAlign: 'center' }}>
                <h1 style={{ marginBottom: '2rem' }}>Order History</h1>

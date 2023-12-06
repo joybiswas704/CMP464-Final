@@ -1,28 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CardItem from '../CardItem/CardItem';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { productList, orderData, removesProduct } from '../../data/dummyData';
+import axios from 'axios';
 
 export default function CardItemList() {
-     const [products, setProducts] = useState([...productList]);
+     const [products, setProducts] = useState([]);
+
+     useEffect(() => {
+          getProducts();
+     }, []);
+
      const handleBuy = (id) => {
-          removesProduct(id);
-          if (
-               products.filter((product) => {
-                    if (id === product.id) {
-                         updateOrderData(product);
-                    }
-               })
-          )
-               setProducts(productList);
+          deleteProduct(id);
+          getProducts();
      };
 
-     const updateOrderData = (product) => {
-          orderData.push(product);
-          console.log(orderData);
-     };
+     function getProducts() {
+          axios.get('http://localhost:3000/api/products')
+               .then(function (response) {
+                    console.log(response.data);
+                    setProducts(response.data);
+               })
+               .catch(function (error) {
+                    console.log(error);
+               });
+     }
+
+     function deleteProduct(id) {
+          axios.delete(`http://localhost:3000/api/products/${id}`)
+               .then(function (response) {
+                    console.log('item deleted');
+               })
+               .catch(function (error) {
+                    console.log(error);
+               });
+     }
+
      return (
           <Container fluid>
                <Row>
