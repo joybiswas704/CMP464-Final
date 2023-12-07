@@ -2,9 +2,11 @@ const { Pool } = require('pg');
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const bodyParser = require('body-parser');
 
 const app = express();
 app.use(express.json());
+app.use(bodyParser.json()); // Parse JSON request body
 app.use(cors());
 
 const PORT = 3000;
@@ -87,13 +89,15 @@ app.get('/api/orders', async (req, res) => {
      }
 });
 
-// Endpoint to delete order
-app.delete('/api/orders/:id', async (req, res) => {
+// Endpoint to add order
+app.post('/api/orders', async (req, res) => {
      try {
+          const { id, name, price } = req.body;
+
           // Query the database
           const client = await pool.connect();
           const queryResult = await client.query(
-               `DELETE FROM orders WHERE id=${req.params.id}`
+               `INSERT INTO orders VALUES(${id}, '${name}', ${price}, ${1})`
           );
           client.release(); // Release the client back to the pool
 
@@ -104,7 +108,7 @@ app.delete('/api/orders/:id', async (req, res) => {
           // Send the JSON data as the response
           res.json(jsonData);
      } catch (error) {
-          console.error('Error deleting order in the database:', error);
+          console.error('Error deleting order from the database:', error);
           res.status(500).json({ error: 'Internal Server Error' });
      }
 });
