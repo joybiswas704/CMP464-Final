@@ -13,6 +13,7 @@ export default function CardItemList() {
      }, []);
 
      const handleBuy = (id) => {
+          updateOrders(id);
           deleteProduct(id);
           getProducts();
      };
@@ -32,6 +33,18 @@ export default function CardItemList() {
           axios.delete(`http://localhost:3000/api/products/${id}`)
                .then(function (response) {
                     console.log('item deleted');
+               })
+               .catch(function (error) {
+                    console.log(error);
+               });
+     }
+
+     function updateOrders(id) {
+          const order = products.filter((product) => product.id === id);
+          console.log(order);
+          axios.post('http://localhost:3000/api/orders', order)
+               .then(function (response) {
+                    console.log(response.data);
                })
                .catch(function (error) {
                     console.log(error);

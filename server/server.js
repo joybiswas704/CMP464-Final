@@ -92,7 +92,8 @@ app.get('/api/orders', async (req, res) => {
 // Endpoint to add order
 app.post('/api/orders', async (req, res) => {
      try {
-          const { id, name, price } = req.body;
+          const { id, name, price } = req.body[0];
+          console.log(id, name, price);
 
           // Query the database
           const client = await pool.connect();
@@ -108,7 +109,31 @@ app.post('/api/orders', async (req, res) => {
           // Send the JSON data as the response
           res.json(jsonData);
      } catch (error) {
-          console.error('Error deleting order from the database:', error);
+          console.error('Error creating order in the database:', error);
+          res.status(500).json({ error: 'Internal Server Error' });
+     }
+});
+
+// Endpoint to add product
+app.post('/api/products', async (req, res) => {
+     try {
+          const { id, name, price, des, img } = req.body;
+
+          // Query the database
+          const client = await pool.connect();
+          const queryResult = await client.query(
+               `INSERT INTO products VALUES(${id}, '${name}', ${price}, '${des}', '${img}')`
+          );
+          client.release(); // Release the client back to the pool
+
+          // Convert the database result to JSON
+          const jsonData = queryResult.rows;
+          console.log(jsonData);
+
+          // Send the JSON data as the response
+          res.json(jsonData);
+     } catch (error) {
+          console.error('Error inserting product in the database:', error);
           res.status(500).json({ error: 'Internal Server Error' });
      }
 });
