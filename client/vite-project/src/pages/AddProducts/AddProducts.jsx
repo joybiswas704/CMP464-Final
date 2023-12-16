@@ -7,6 +7,11 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 
 export default function AddProducts() {
+     const [name, setName] = useState('');
+     const [price, setPrice] = useState('');
+     const [des, setDes] = useState('');
+     const [img, setImg] = useState('');
+
      return (
           <>
                <Container fluid>
@@ -25,7 +30,14 @@ export default function AddProducts() {
                                         controlId='exampleForm.ControlInput1'
                                    >
                                         <Form.Label>Name</Form.Label>
-                                        <Form.Control type='text' />
+                                        <Form.Control
+                                             name={name}
+                                             value={name}
+                                             type='text'
+                                             onChange={(event) =>
+                                                  setName(event.target.value)
+                                             }
+                                        />
                                    </Form.Group>
                               </Col>
                               <Col>
@@ -34,7 +46,14 @@ export default function AddProducts() {
                                         controlId='exampleForm.ControlInput1'
                                    >
                                         <Form.Label>Price</Form.Label>
-                                        <Form.Control type='text' />
+                                        <Form.Control
+                                             name={price}
+                                             value={price}
+                                             type='text'
+                                             onChange={(event) =>
+                                                  setPrice(event.target.value)
+                                             }
+                                        />
                                    </Form.Group>
                               </Col>
                          </Row>
@@ -45,14 +64,28 @@ export default function AddProducts() {
                                         controlId='exampleForm.ControlInput1'
                                    >
                                         <Form.Label>Description</Form.Label>
-                                        <Form.Control type='text' />
+                                        <Form.Control
+                                             name={des}
+                                             type='text'
+                                             onChange={(event) =>
+                                                  setDes(event.target.value)
+                                             }
+                                             value={des}
+                                        />
                                    </Form.Group>
                                    <Form.Group
                                         className='mb-3'
                                         controlId='exampleForm.ControlInput1'
                                    >
                                         <Form.Label>Image Link</Form.Label>
-                                        <Form.Control type='text' />
+                                        <Form.Control
+                                             name={img}
+                                             value={img}
+                                             type='text'
+                                             onChange={(event) =>
+                                                  setImg(event.target.value)
+                                             }
+                                        />
                                    </Form.Group>
                               </Col>
                          </Row>
