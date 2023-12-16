@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import NavBar from './components/Navbar/Navbar';
 import Home from './pages/Home/Home';
+import AddProducts from './pages/AddProducts/AddProducts';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import OrderHistory from './pages/OrderHistory/OrderHistory';
 
@@ -17,8 +18,8 @@ function App() {
                          <Route path='/' exact>
                               <Home />
                          </Route>
-                         <Route path='/products' exact>
-                              <Home />
+                         <Route path='/addProducts' exact>
+                              <AddProducts />
                          </Route>
                          <Route path='/orders' exact>
                               <OrderHistory />

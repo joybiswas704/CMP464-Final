@@ -10,7 +10,7 @@ export default function CardItemList() {
 
      useEffect(() => {
           getProducts();
-     }, []);
+     }, [products]);
 
      const handleBuy = (id) => {
           updateOrders(id);

@@ -23,9 +23,9 @@ function NavBar() {
                               <Nav.Link>
                                    <Link
                                         style={{ textDecoration: 'none' }}
-                                        to='products'
+                                        to='addProducts'
                                    >
-                                        Products
+                                        Add Products
                                    </Link>
                               </Nav.Link>
                               <Nav.Link>
