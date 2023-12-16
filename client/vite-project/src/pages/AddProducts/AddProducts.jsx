@@ -5,12 +5,30 @@ import Container from 'react-bootstrap/esm/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
+import axios from 'axios';
 
 export default function AddProducts() {
      const [name, setName] = useState('');
      const [price, setPrice] = useState('');
      const [des, setDes] = useState('');
      const [img, setImg] = useState('');
+
+     const handleAddProducts = () => {
+          axios.post('http://localhost:3000/api/products', {
+               id: Math.floor(Math.random() * 99999),
+               name: name,
+               price: price,
+               des: des,
+               img: img,
+          })
+               .then(function (response) {
+                    console.log(response.data);
+                    setProducts(response.data);
+               })
+               .catch(function (error) {
+                    console.log(error);
+               });
+     };
 
      return (
           <>
@@ -91,7 +109,10 @@ export default function AddProducts() {
                          </Row>
                          <Row>
                               <Col>
-                                   <Button variant='primary'>
+                                   <Button
+                                        variant='primary'
+                                        onClick={handleAddProducts}
+                                   >
                                         Add Product
                                    </Button>
                               </Col>
